@@ -219,8 +219,9 @@ def authenticate_gateway(driver_path,
                 _LOGGER.error(f'Error displayed by the login webpage: {trigger.text}')
                 save_screenshot(driver, '__failed_attempt')
 
+                 _LOGGER.debug(f'Trigger text: {trigger.text}')
                 # try to prevent having the account locked-out
-                if trigger.text == 'failed' and var.MAX_FAILED_AUTH > 0:
+                if (trigger.text == 'failed' or trigger.text == 'Invalid username password combination' ) and var.MAX_FAILED_AUTH > 0:                   
                     global _FAILED_ATTEMPTS
                     _FAILED_ATTEMPTS += 1
                     if _FAILED_ATTEMPTS >= var.MAX_FAILED_AUTH:
